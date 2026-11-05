@@ -14,7 +14,7 @@ export async function getForecast({lat,lon}) {
   const params = new URLSearchParams({
     latitude: lat,
     longitude: lon,
-    daily: "temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    daily: "temperature_2m_max,wind_speed_10m_max,precipitation_probability_max",
     timezone: "Asia/Seoul",
     forecast_days: 7,
   });
