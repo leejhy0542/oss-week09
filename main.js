@@ -1,4 +1,5 @@
 import { getForecast } from "./api.js";
+import { toDays } from "./logic.js";
 // main.js — 화면 담당. P1 ~ P5, P7 에서 이어서 채웁니다.
 //
 // 상황: index.html 에 폼과 빈 표가 있고, 이 파일이 <script type="module"> 로 연결되어 있습니다.
@@ -35,10 +36,35 @@ form.addEventListener("submit", async (event) => {
 
   try{
     const daily = await getForecast(city);
-    console.log(daily);
+    state.city = city;
+    state.days = toDays(daily);
     statusEl.textContent = "";
   } catch(err){
     statusEl.textContent = `Could not load the forecast (${err.message})`;
     statusEl.classList.add("error");
   }
+  render();
 });
+
+const state = {city: null, days: []};
+
+function dayRow(day){
+  const tr = document.createElement("tr");
+  for(const text of [day.date.slice(5), `${day.max}°`, `${day.wind}km/h`, `${day.rain}%`]){
+    const td = document.createElement("td");
+    td.textContent = text;
+    tr.append(td);
+  }
+  return tr;
+}
+
+// rowsEl.replaceChildren(...rows);
+// summaryEl.textContent = `${city.name}: umbrella on ${wet} of ${daily.time.length} days.`;
+// statusEl.textContent = "";
+// const rows = [tr1,tr2,tr3];
+// rowsEl.replaceChildren(...rows);
+
+function render(){
+  const rows = state.days.map(dayRow);
+  rowsEl.replaceChildren(...rows);
+}
