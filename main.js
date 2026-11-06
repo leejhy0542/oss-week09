@@ -49,6 +49,17 @@ form.addEventListener("submit", async (event) => {
   render();
 });
 
+function handleLimitChange(){
+  state.limits.rain = Number(rainInput.value);
+  state.limits.wind = Number(windInput.value);
+
+  if(state.days.length > 0)
+    render();
+}
+
+rainInput.addEventListener("input", handleLimitChange);
+windInput.addEventListener("input", handleLimitChange);
+
 const state = {city: null, days: [], limits: {rain: Number(rainInput.value), wind: Number(windInput.value)}};
 
 function dayRow(day){
