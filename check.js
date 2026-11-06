@@ -1,4 +1,4 @@
-import { toDays, isGoodDay, summarize } from "./logic.js";
+import { toDays, isGoodDay, summarize, reasons } from "./logic.js";
 // check.js — 브라우저 없이 규칙 확인하기. P6 에서 채우고 P7 에서 한 번 더 늘립니다.
 //
 // 상황: 규칙이 맞는지 매번 브라우저를 열고 표를 눈으로 대 보기는 번거롭고, 빠뜨리기 쉽습니다.
@@ -8,10 +8,10 @@ import { toDays, isGoodDay, summarize } from "./logic.js";
 // 확인: 출력이 주석의 예상과 전부 같습니다.
 // 커밋 메시지: p6: check (P7 에서 늘린 것은 p7: reasons 에 같이)
 const daily = {
-    time: ["11-04", "11-05", "11-06","11-07"],
+    time: ["11-04", "11-05", "11-06","11-07","11-08"],
     temperature_2m_max: [7, 10, 15,16],
-    precipitation_probability_max: [20, 30, 25, 35],
-    wind_speed_10m_max: [5, 10, 12, 8]
+    precipitation_probability_max: [20, 30, 25, 35,40],
+    wind_speed_10m_max: [5, 10, 12, 8,15]
 };
 const days = toDays(daily);
 const limits = {rain:30,wind:10};
@@ -21,6 +21,11 @@ console.log(isGoodDay(days[0], limits));//true
 console.log(isGoodDay(days[1], limits));//true
 console.log(isGoodDay(days[2], limits));//false
 console.log(isGoodDay(days[3], limits));//false
+
+console.log(reasons(days[0], limits)); //[]둘 다 통과
+console.log(reasons(days[1], limits)); //[]둘 다 통과
+console.log(reasons(days[2], limits)); //['rain] 강수만 초과
+console.log(reasons(days[4], limits)); //['rain','wind']둘 다 초과
 
 console.log(summarize(days,limits));
 
