@@ -36,6 +36,7 @@ form.addEventListener("submit", async (event) => {
   state.limits.wind = Number(windInput.value);
 
   statusEl.textContent = "Loading...";
+  statusEl.classList.remove("error");
 
   try{
     const daily = await getForecast(city);
